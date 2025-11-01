@@ -127,5 +127,5 @@ class PanelExtractor:
                 cv2.imwrite(panel_path, panel)
 
                 # Auto-delete panels smaller than 15 KB
-                if getsize(panel_path) < 15 * 1024:  # 15 KB = 15 * 1024 bytes
+                if getsize(panel_path) < 16 * 1024:  # 15 KB = 15 * 1024 bytes
                     remove(panel_path)
