@@ -3,6 +3,12 @@ A python implementation of a Manga Panel Extractor and a dialogue bubble text er
 
 The text erasor is based on the CRAFT text detector. See [here](https://github.com/clovaai/CRAFT-pytorch) for more information.
 
+## Updates
+This version has been updated to work with modern Python libraries:
+- Compatible with PyTorch 2.x and torchvision 0.23+
+- Compatible with NumPy 2.x
+- Updated dependency names for better package management
+
 ## Installation
 This code runs on python >= 3.6, use pip to install dependencies:
 ```
