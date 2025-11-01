@@ -6,6 +6,7 @@ This tool automatically detects and extracts individual panels from manga pages,
 ## Features
 - Automatic panel detection and extraction
 - Optional dialogue bubble text removal
+- Smart filtering: automatically deletes panels smaller than 15 KB
 - Compatible with modern Python libraries (PyTorch 2.x, NumPy 2.x)
 - Batch processing of manga images
 
