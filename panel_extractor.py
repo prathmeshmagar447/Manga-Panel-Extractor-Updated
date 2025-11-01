@@ -1,6 +1,6 @@
 # stdlib
-from os.path import splitext, basename, exists, join
-from os import makedirs
+from os.path import splitext, basename, exists, join, getsize
+from os import makedirs, remove
 # 3p
 from tqdm import tqdm
 import numpy as np
@@ -123,4 +123,9 @@ class PanelExtractor:
             panels = self.generate_panels(img)
             name, ext = splitext(basename(image_list[i]))
             for j, panel in enumerate(panels):
-                cv2.imwrite(join(folder, f'{name}_{j}.{ext}'), panel)
+                panel_path = join(folder, f'{name}_{j}.{ext}')
+                cv2.imwrite(panel_path, panel)
+
+                # Auto-delete panels smaller than 15 KB
+                if getsize(panel_path) < 15 * 1024:  # 15 KB = 15 * 1024 bytes
+                    remove(panel_path)
