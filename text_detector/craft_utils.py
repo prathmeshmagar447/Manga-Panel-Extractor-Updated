@@ -1,5 +1,5 @@
-"""  
-Copyright (c) 2019-present NAVER Corp.
+"""
+Copyright (c) 2025 Prathmesh Magar
 MIT License
 """
 

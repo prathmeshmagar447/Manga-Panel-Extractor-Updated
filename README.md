@@ -1,13 +1,13 @@
 # Manga-Panel-Extractor
-A python implementation of a Manga Panel Extractor and a dialogue bubble text eraser.
+A python implementation of a Manga Panel Extractor and dialogue bubble text eraser.
 
-The text erasor is based on the CRAFT text detector. See [here](https://github.com/clovaai/CRAFT-pytorch) for more information.
+This tool automatically detects and extracts individual panels from manga pages, with optional text removal from dialogue bubbles.
 
-## Updates
-This version has been updated to work with modern Python libraries:
-- Compatible with PyTorch 2.x and torchvision 0.23+
-- Compatible with NumPy 2.x
-- Updated dependency names for better package management
+## Features
+- Automatic panel detection and extraction
+- Optional dialogue bubble text removal
+- Compatible with modern Python libraries (PyTorch 2.x, NumPy 2.x)
+- Batch processing of manga images
 
 ## Installation
 This code runs on python >= 3.6, use pip to install dependencies:
