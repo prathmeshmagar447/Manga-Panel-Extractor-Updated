@@ -19,7 +19,7 @@ def list_files(in_path):
         for file in filenames:
             filename, ext = os.path.splitext(file)
             ext = str.lower(ext)
-            if ext == '.jpg' or ext == '.jpeg' or ext == '.gif' or ext == '.png' or ext == '.pgm':
+            if ext == '.jpg' or ext == '.jpeg' or ext == '.gif' or ext == '.png' or ext == '.pgm' or ext == '.webp':
                 img_files.append(os.path.join(dirpath, file))
             elif ext == '.bmp':
                 mask_files.append(os.path.join(dirpath, file))
@@ -39,5 +39,9 @@ def load_image(img_file):
     if img.shape[2] == 4:
         img = img[:, :, :3]
     img = np.array(img)
+
+    # Ensure uint8
+    if img.dtype != np.uint8:
+        img = (img * 255).astype(np.uint8) if img.max() <= 1.0 else img.astype(np.uint8)
 
     return img

@@ -1,4 +1,5 @@
 # stdlib
+import os
 from os.path import splitext, basename, exists, join, getsize
 from os import makedirs, remove
 # 3p
@@ -104,26 +105,35 @@ class PanelExtractor:
         print("Done!")
 
         # create panels dir
-        if not exists(join(folder, "panels")):
-            makedirs(join(folder, "panels"))
-        folder = join(folder, "panels")
+        panels_base = join(folder, "panels")
+        if not exists(panels_base):
+            makedirs(panels_base)
 
         # remove images with paper texture, not well segmented
-        paperless_imgs = []
-        for img in tqdm(imgs, desc="Removing images with paper texture"):
-            hist, bins = np.histogram(img.copy().ravel(), 256, [0, 256])
-            if np.sum(hist[50:200]) / np.sum(hist) < self.paper_th:
-                paperless_imgs.append(img)
+        paperless_imgs = imgs
+        paperless_indices = list(range(len(imgs)))
+        # for i, img in tqdm(enumerate(imgs), desc="Removing images with paper texture"):
+        #     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        #     hist, bins = np.histogram(gray.ravel(), 256, [0, 256])
+        #     if np.sum(hist[50:200]) / np.sum(hist) < self.paper_th:
+        #         paperless_imgs.append(img)
+        #         paperless_indices.append(i)
 
         # remove text from panels
         if not self.keep_text:
             paperless_imgs = self.remove_text(paperless_imgs)
 
-        for i, img in tqdm(enumerate(paperless_imgs), desc="extracting panels"):
+        for idx, img in tqdm(enumerate(paperless_imgs), desc="extracting panels"):
+            i = paperless_indices[idx]
+            img_file = image_list[i]
+            rel_dir = os.path.relpath(os.path.dirname(img_file), folder)
+            panel_dir = join(panels_base, rel_dir)
+            if not exists(panel_dir):
+                makedirs(panel_dir)
             panels = self.generate_panels(img)
-            name, ext = splitext(basename(image_list[i]))
+            name, ext = splitext(basename(img_file))
             for j, panel in enumerate(panels):
-                panel_path = join(folder, f'{name}_{j}.{ext}')
+                panel_path = join(panel_dir, f'{name}_{j}{ext}')
                 cv2.imwrite(panel_path, panel)
 
                 # Auto-delete panels smaller than 15 KB
